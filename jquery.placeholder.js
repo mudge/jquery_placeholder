@@ -24,10 +24,10 @@
     backwardsCompatibility: function() {
       if (!$.placeholder.supportedNatively()) {
         $(window).unload(function() {
-          $('input.' + $.placeholder.className).val('');
+          $(':input.' + $.placeholder.className).val('');
         });
         
-        $('input[placeholder]').each(function() {
+        $(':input[placeholder]').each(function() {
           var $this = $(this);
           var placeholder = $this.attr('placeholder');
           
