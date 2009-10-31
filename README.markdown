@@ -33,7 +33,7 @@ like the following:
     ._placeholder { color: #aaa; }
 
 If you want to customise the class name used, you'll have to stop the plugin from
-automatically running itself by commenting out `$.placeholder.backwardsCompatibility();`
+automatically running itself by commenting out `$($.placeholder.backwardsCompatibility);`
 towards the end of `jquery.placeholder.js`. You can then set the class name via
 `$.placeholder.className` and call `backwardsCompatibility()` yourself.
 

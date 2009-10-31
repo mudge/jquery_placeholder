@@ -1,5 +1,7 @@
 /*
  * jQuery Placeholder Plugin.
+ * http://github.com/mudge/jquery_placeholder
+ *
  * A plugin to make HTML5's placeholder attribute work in non-HTML5-supporting
  * browsers.
  *
@@ -27,7 +29,8 @@
       /* Determine whether backwards compatibility is required for
        * both inputs and textareas or just for textareas.
        */
-      if (!$.placeholder.supportedNatively('input') && !$.placeholder.supportedNatively('textarea')) {
+      if (!$.placeholder.supportedNatively('input') && 
+          !$.placeholder.supportedNatively('textarea')) {
         var elementSelector = ':input';
       } else if (!$.placeholder.supportedNatively('textarea')) {
         var elementSelector = 'textarea';
@@ -44,13 +47,29 @@
           var $this = $(this);
           var placeholder = $this.attr('placeholder');
           
+          /* A fix for Internet Explorer caching placeholder form values even
+           * when they are cleared on wndow unload.
+           */
+          if (!$this.attr('defaultValue') && $this.val() == placeholder) {
+            $this.val('');
+          }
+          
           $this.blur(function() {
-            if ($this.val() == '') {
+            
+            /* As this handler is called on document ready make sure
+             * that the currently active element isn't populated with
+             * a placeholder.
+             */
+            if (this != document.activeElement && $this.val() == '') {
               $this.addClass($.placeholder.className).val(placeholder);
             }
           }).focus(function() {
             if ($this.hasClass($.placeholder.className)) {
               $this.val('').removeClass($.placeholder.className);
+            }
+          }).change(function() {
+            if ($this.hasClass($.placeholder.className)) {
+              $this.removeClass($.placeholder.className);
             }
           }).parents('form:first').submit(function() {
             $this.triggerHandler('focus');
@@ -60,12 +79,11 @@
     }
   };
   
-  /* 
-   * Comment this out if you don't want the plugin to automatically
-   * execute itself and want to customise the class name.
+  /* Comment this out if you don't want the plugin to automatically
+   * execute itself on document ready and want to customise the class name.
    * (You'll have to call backwardsCompatibility() yourself, of course.)
    */
-  $.placeholder.backwardsCompatibility();
+  $($.placeholder.backwardsCompatibility);
   
 })(jQuery);
 
