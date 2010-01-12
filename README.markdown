@@ -26,11 +26,11 @@ e.g.
 
   [jquery]: http://jquery.com/
 
-Placeholder values in non-HTML5 browsers will be given the CSS class of `_placeholder` so 
+Placeholder values in non-HTML5 browsers will be given the CSS class of `jquery_placeholder` so 
 you can style them to mimic other browsers' defaults which for Safari seems to be something 
 like the following:
 
-    ._placeholder { color: #aaa; }
+    .jquery_placeholder { color: #aaa; }
 
 If you want to customise the class name used, you'll have to stop the plugin from
 automatically running itself by commenting out `$($.placeholder.backwardsCompatibility);`
@@ -45,3 +45,10 @@ e.g.
       $.placeholder.className = 'myPlaceholderCSSClass';
       $.placeholder.backwardsCompatibility();
     </script>
+
+Licensing
+---------
+
+Copyright (c) Paul Mucur (http://mucur.name), 2010.
+Licensed under the MIT license (see LICENSE.txt).
+
