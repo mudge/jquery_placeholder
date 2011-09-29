@@ -46,9 +46,18 @@ e.g.
       $.placeholder.backwardsCompatibility();
     </script>
 
+All event handlers are namespaced with `.placeholder` so they can be unbound or
+triggered selectively:
+
+* `unload.placeholder` on the window;
+* `blur.placeholder` on the affected inputs;
+* `focus.placeholder` on the affected inputs;
+* `change.placeholder` on the affected inputs;
+* `submit.placeholder` on the affected forms.
+
 Licensing
 ---------
 
-Copyright (c) Paul Mucur (http://mucur.name), 2010.
+Copyright (c) Paul Mucur (http://mudge.name), 2010-2011.
 Licensed under the MIT license (see LICENSE.txt).
 

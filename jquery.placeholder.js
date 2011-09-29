@@ -5,10 +5,10 @@
  * A plugin to make HTML5's placeholder attribute work in non-HTML5-supporting
  * browsers.
  *
- * Copyright (c) Paul Mucur (http://mucur.name), 2010.
+ * Copyright (c) Paul Mucur (http://mudge.name), 2010-2011.
  * Licensed under the MIT licence (see LICENSE.txt).
  */
-(function($) {
+(function($, undefined) {
 
   $.placeholder = {
 
@@ -30,7 +30,7 @@
       /* Determine whether backwards compatibility is required for
        * both inputs and textareas or just for textareas.
        */
-      if (!$.placeholder.supportedNatively('input') && 
+      if (!$.placeholder.supportedNatively('input') &&
           !$.placeholder.supportedNatively('textarea')) {
         var elementSelector = ':input';
       } else if (!$.placeholder.supportedNatively('textarea')) {
@@ -40,7 +40,7 @@
       }
 
       if (elementSelector) {
-        $(window).unload(function() {
+        $(window).bind('unload.placeholder', function() {
           $(elementSelector + '.' + $.placeholder.className).val('');
         });
 
@@ -51,30 +51,30 @@
           /* A fix for Internet Explorer caching placeholder form values even
            * when they are cleared on wndow unload.
            */
-          if (!$this.attr('defaultValue') && $this.val() == placeholder) {
+          if (!$this.attr('value') && $this.val() === placeholder) {
             $this.val('');
           }
 
-          $this.blur(function() {
+          $this.bind('blur.placeholder', function() {
 
             /* As this handler is called on document ready make sure
              * that the currently active element isn't populated with
              * a placeholder.
              */
-            if (this != document.activeElement && $this.val() == '') {
+            if (this !== document.activeElement && $this.val() === '') {
               $this.addClass($.placeholder.className).val(placeholder);
             }
-          }).focus(function() {
+          }).bind('focus.placeholder', function() {
             if ($this.hasClass($.placeholder.className)) {
               $this.val('').removeClass($.placeholder.className);
             }
-          }).change(function() {
+          }).bind('change.placeholder', function() {
             if ($this.hasClass($.placeholder.className)) {
               $this.removeClass($.placeholder.className);
             }
-          }).parents('form:first').submit(function() {
-            $this.triggerHandler('focus');
-          }).end().triggerHandler('blur');
+          }).parents('form:first').bind('submit.placeholder', function() {
+            $this.triggerHandler('focus.placeholder');
+          }).end().triggerHandler('blur.placeholder');
         });
       }
     }
