@@ -8,7 +8,8 @@
  * Copyright (c) Paul Mucur (http://mudge.name), 2010-2011.
  * Licensed under the MIT licence (see LICENSE.txt).
  */
-(function($, undefined) {
+(function($) {
+  "use strict";
 
   $.placeholder = {
 
@@ -27,16 +28,18 @@
 
     backwardsCompatibility: function() {
 
+      var elementSelector;
+
       /* Determine whether backwards compatibility is required for
        * both inputs and textareas or just for textareas.
        */
       if (!$.placeholder.supportedNatively('input') &&
           !$.placeholder.supportedNatively('textarea')) {
-        var elementSelector = ':input';
+        elementSelector = ':input';
       } else if (!$.placeholder.supportedNatively('textarea')) {
-        var elementSelector = 'textarea';
+        elementSelector = 'textarea';
       } else {
-        var elementSelector = null;
+        elementSelector = null;
       }
 
       if (elementSelector) {
@@ -45,8 +48,8 @@
         });
 
         $(elementSelector + '[placeholder]').each(function() {
-          var $this = $(this);
-          var placeholder = $this.attr('placeholder');
+          var $this       = $(this),
+              placeholder = $this.attr('placeholder');
 
           /* A fix for Internet Explorer caching placeholder form values even
            * when they are cleared on wndow unload.
@@ -86,5 +89,5 @@
    */
   $($.placeholder.backwardsCompatibility);
 
-})(jQuery);
+}(jQuery));
 
